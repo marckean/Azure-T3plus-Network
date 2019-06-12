@@ -6,7 +6,7 @@
         "type": "array",
         "defaultValue": [
             {
-                "vnet": { "name": "T2vNet01", "addressPrefix": [ "10.5.0.0/21"  ] },
+                "vnet": { "name": "T3plusvNet01", "addressPrefix": [ "10.5.0.0/21"  ] },
                 "subnets": [
                   {"subnet": {"name": "subnet01", "addressPrefix": "10.5.0.0/24"}},
                   {"subnet": {"name": "subnet02", "addressPrefix": "10.5.1.0/24"}}

@@ -1,0 +1,55 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "vNetArray": {
+        "type": "array",
+        "defaultValue": [
+            {
+                "vnet": { "name": "T2vNet01", "addressPrefix": [ "10.5.0.0/21"  ] },
+                "subnets": [
+                  {"subnet": {"name": "subnet01", "addressPrefix": "10.5.0.0/24"}},
+                  {"subnet": {"name": "subnet02", "addressPrefix": "10.5.1.0/24"}}
+                ]
+            }
+        ],
+        "metadata": {
+            "description": "Array of spoke objects. See defaultValue for example."
+        }
+      }
+    },
+    "variables": {
+    },
+    "resources": [
+      {
+        "type": "Microsoft.Network/virtualNetworks",
+        "name": "[parameters('vNetArray')[copyIndex()].vnet.name]",
+        "apiVersion": "2018-04-01",
+        "location": "[resourceGroup().location]",
+        "copy": {
+          "name": "T2vNetCopy",
+          "count": "[length(parameters('vNetArray'))]",
+          "mode": "Parallel"
+        },
+        "properties": {
+          "addressSpace": {
+            "addressPrefixes": "[parameters('vNetArray')[copyIndex()].vnet.addressPrefix]"
+          },
+          "copy": [
+            {
+              "name": "subnets",
+              "count": "[length(parameters('vNetArray')[copyIndex()].subnets)]",
+              "input": {
+                "name": "[parameters('vNetArray')[copyIndex()].subnets[copyIndex('subnets')].subnet.name]",
+                "properties": {
+                  "addressPrefix": "[parameters('vNetArray')[copyIndex()].subnets[copyIndex('subnets')].subnet.addressPrefix]"
+                }
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "outputs": {
+    }
+  }

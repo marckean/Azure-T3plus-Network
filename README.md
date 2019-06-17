@@ -1,6 +1,6 @@
 # Part 4 - Tier 3 plus
 ## The Azure 3 Tier Network
-This **part 2** of a 5 part series of templates to deploy a glorified 3 tier Azure network
+This **part 4** of a 5 part series of templates to deploy a glorified 3 tier Azure network
 1. https://github.com/marckean/Azure-T1-Network
     - *Resource Group based template*
     - Most un-trusted tier, as it has access to the internet
